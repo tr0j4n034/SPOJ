@@ -1,2 +1,2 @@
-# SPOJ
-# SPOJ
+# SPOJ solutions
+# username: mahmud2690
