@@ -1,0 +1,1 @@
+print(bin((int(input()) + 0xAAAAAAAA) ^ 0xAAAAAAAA)[2::])
