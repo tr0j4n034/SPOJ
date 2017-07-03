@@ -31,7 +31,6 @@
 using namespace std;
 
 const int me = 300025;
-const int LOG = 19;
 
 int N;
 int a[me];
