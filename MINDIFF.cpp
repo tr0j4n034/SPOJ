@@ -33,7 +33,7 @@ using namespace std;
 const int me = 1025;
 
 int T;
-int l[3], a[3][me], cnt[3];
+int l[3], cnt[3];
 
 bool safe_remove(pair<int, int> &data){
     cnt[data.second] --;
