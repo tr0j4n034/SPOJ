@@ -1,5 +1,3 @@
-// I love Dolphin
-// such a big prune
 //
 //  main.cpp
 //  Dolphin
