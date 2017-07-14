@@ -33,7 +33,6 @@ using namespace std;
 const int me = 10025;
 
 int T, N, M;
-int l, r;
 int has[me];
 
 int main() {
