@@ -50,7 +50,6 @@ int main(int argc, const char * argv[]) {
             while(ptr < N && current_sum + a[ptr + 1] <= mid){
                 current_sum += a[++ptr];
             }
-            
             if(ptr >= i)
                 s += ptr - i + 1;
             current_sum -= a[i];
