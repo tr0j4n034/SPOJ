@@ -6,7 +6,6 @@
 //  Copyright © 2017 Mahmud. All rights reserved.
 //
 
-
 #include <iostream>
 #include <cstdio>
 #include <cstdlib>
