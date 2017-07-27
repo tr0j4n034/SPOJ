@@ -1,83 +1,67 @@
+//
+//  main.cpp
+//  practice
+//
+//  Created by Mahmud on 7/27/17.
+//  Copyright © 2017 Mahmud. All rights reserved.
+//
+
 #include <iostream>
 #include <cstdio>
-#include <cstdlib>
-#include <cmath>
-#include <cstring>
-#include <numeric>
-#include <algorithm>
-#include <functional>
 #include <vector>
 #include <queue>
-#include <set>
-#include <map>
-//#include <unordered_map>
-#include <utility>
-#include <cassert>
-#include <iomanip>
-#include <ctime>
 
 using namespace std;
 
-const int me = 1025;
-
-int n, m, a, b;
-int dis[me];
-vector<pair<int, int> > edges[me];
-vector<int> cities[2];
-
 int main(int argc, const char * argv[]) {
-    //ios_base::sync_with_stdio(0);
-    //cin.tie(0);
     
-    while(scanf("%d%d%d%d", &n, &m, &a, &b) != EOF){
-        if(n + m == 0)
+    int n, m, a, b;
+    while(scanf("%d%d%d%d", &n, &m, &a, &b) != EOF) {
+        if(n + m + a + b == 0) {
             break;
-        cities[0].clear();
-        cities[1].clear();
-        for(int i = 0; i < a; i ++){
-            int x;
-            scanf("%d", &x);
-            cities[0].push_back(x);
         }
-        for(int i = 0; i < b; i ++){
-            int x;
-            scanf("%d", &x);
-            cities[1].push_back(x);
+        vector<int> citiesA, citiesB;
+        vector<int> distances(n + 1, 1 << 30);
+        vector<vector<pair<int, int>>> edges(n + 1);
+        for(int i = 0; i < a; i ++) {
+            int id;
+            scanf("%d", &id);
+            citiesA.push_back(id);
+            edges[0].push_back(make_pair(id, 0));
+            edges[id].push_back(make_pair(0, 0));
         }
-        for(int i = 0; i < n + 2; i ++)
-            edges[i].clear();
-        for(int i : cities[0]){
-            edges[i].push_back(make_pair(n, 0));
-            edges[n].push_back(make_pair(i, 0));
+        for(int i = 0; i < b; i ++) {
+            int id;
+            scanf("%d", &id);
+            citiesB.push_back(id);
+            edges[n].push_back(make_pair(id, 0));
+            edges[id].push_back(make_pair(n, 0));
         }
-        for(int i : cities[1]){
-            edges[i].push_back(make_pair(n + 1, 0));
-            edges[n + 1].push_back(make_pair(i, 0));
+        for(int i = 0; i < m; i ++) {
+            int from, to, length;
+            scanf("%d%d%d", &from, &to, &length);
+            edges[from].push_back(make_pair(to, length));
+            edges[to].push_back(make_pair(from, length));
         }
-        while(m --){
-            int u, v, l;
-            scanf("%d%d%d", &u, &v, &l);
-            edges[u].push_back(make_pair(v, l));
-            edges[v].push_back(make_pair(u, l));
-        }
-        for(int i = 0; i < n + 2; i ++)
-            dis[i] = 1 << 30;
-        dis[n] = 0;
-        priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> Q;
-        Q.push(make_pair(0, n));
-        while(!Q.empty()){
-            pair<int, int> cur = Q.top();
+        // Dijkstra
+        priority_queue<pair<int, int>> Q;
+        Q.push(make_pair(0, 0));
+        while(!Q.empty()) {
+            pair<int, int> current = Q.top();
             Q.pop();
-            if(cur.first > dis[cur.second])
+            int id = current.second;
+            int d = current.first;
+            if(d > distances[id]) {
                 continue;
-            for(auto i : edges[cur.second]){
-                if(dis[i.first] > cur.first + i.second){
-                    dis[i.first] = cur.first + i.second;
-                    Q.push(make_pair(dis[i.first], i.first));
+            }
+            for(auto i : edges[id]) {
+                if(distances[i.first] > d + i.second) {
+                    distances[i.first] = d + i.second;
+                    Q.push(make_pair(distances[i.first], i.first));
                 }
             }
         }
-        printf("%d\n", dis[n + 1]);
+        printf("%d\n", distances[n]);
     }
     
     return 0;
