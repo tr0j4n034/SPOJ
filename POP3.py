@@ -2,7 +2,6 @@ import random
 
 # This part is copied from rosettacode... :)
 
-
 _mrpt_num_trials = 5  # number of bases to test
 
 
