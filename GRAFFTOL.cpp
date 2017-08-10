@@ -30,7 +30,6 @@ const int MAX = 100005;
 const int MAX_DEPTH = 18;
 
 int N, Q;
-int timer;
 int x[MAX], y[MAX];
 int parent[MAX][MAX_DEPTH], depth[MAX];
 int selfCost[MAX];
