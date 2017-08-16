@@ -25,9 +25,9 @@ int main(int argc, const char * argv[]) {
         for (int i = 1; i <= N; i ++) {
             cin >> period[i];
         }
-        long long low = 0, high = 1LL << 62, middle, best = high;
+        long long low = 0, high = 1LL << 62, best = high;
         while (low <= high) {
-            middle = (low + high + 1) >> 1;
+            long long middle = (low + high + 1) >> 1;
             long long can = 0;
             for (int i = 1; i <= N && can < M; i ++) {
                 can += middle / period[i];
