@@ -13,4 +13,4 @@ for _ in range(T):
     for t in teams:
         if t not in losers:
             print(t)
-        break
+            break
