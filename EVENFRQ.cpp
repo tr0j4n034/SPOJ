@@ -7,7 +7,7 @@
 //
 
 /*
- A solution containing pruning
+ A solution heavily based on pruning
  If every number has even frequency in a range, then xor of all numbers in the range
  must be equal to 0. Prefix table is used to check that condition.
  */
