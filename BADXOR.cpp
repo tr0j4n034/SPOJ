@@ -56,5 +56,6 @@ int main() {
         }
         cout << "Case " << c + 1 << ": " << (all - bad + MODULO) % MODULO << endl;
     }
+ 
     return 0;
 }
