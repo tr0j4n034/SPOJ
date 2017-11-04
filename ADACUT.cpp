@@ -13,7 +13,7 @@
  First, sort the input.
  Now, think this way: If we choose current element as the required height for, what will happen
   to other elements of the array?
- Smaller elements need to removed(cut down those trees), and bigger elements need
+ Smaller elements need to be removed(cut down those trees), and bigger elements need
   to be reduced to current height.
  This part can be efficiently handled by using prefix sum technique.
  */
