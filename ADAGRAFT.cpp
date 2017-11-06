@@ -112,12 +112,12 @@ int get(pnode &root, int low, int high, int l, int r) {
     + get(root->r, middle + 1, high, l, r);
 }
 
-pnode roots[MAX << 1];
+pnode roots[MAX];
 
 int N;
 int timer;
 int data[MAX];
-int flattenedData[MAX << 1];
+int flattenedData[MAX];
 int in[MAX], out[MAX], who[MAX];
 int nextOccurence[MAX], lastOccurence[MAX];
 vector<int> edges[MAX];
