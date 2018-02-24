@@ -1,81 +1,121 @@
+//
+//  main.cpp
+//  practice
+//
+//  Created by Mahmud on 02/24/18.
+//  Copyright © 2018 Mahmud. All rights reserved.
+//
+
 #include <iostream>
-#include <cstdio>
-#include <cstdlib>
-#include <cmath>
-#include <cstring>
-#include <numeric>
-#include <algorithm>
-#include <functional>
-#include <vector>
-#include <queue>
-#include <stack>
-#include <set>
-#include <map>
-#include <unordered_map>
-#include <list>
-#include <bitset>
-#include <utility>
-#include <cassert>
-#include <iomanip>
 #include <ctime>
-#include <fstream>
+#include <algorithm>
+#include <numeric>
+#include <functional>
 
 using namespace std;
 
-const int me = 1000025;
-const int mod = 1000000007;
+const int MODULO = 1000000007;
+const int MAX = 1000005;
 
-int T, L, R;
-int current;
-int prime[me], lp[me], res[me], f[me], cnt[me];
-
-int power(int a, int b){
-    if(b == 0)
-        return 1;
-    if(b & 1)
-        return 1LL * power(a, b - 1) * a % mod;
-    int half = power(a, b >> 1);
-    return 1LL * half * half % mod;
-}
-int inverse(int a){
-    return power(a, mod - 2);
-}
-
-int main(int argc, const char * argv[]) {
-    ios_base::sync_with_stdio(0);
-    cin.tie(0);
-    
-    res[1] = 1;
-    current = 1;
-    for(int i = 2; i < me; i ++)
-        if(!prime[i]){
-            lp[i] = i;
-            for(int j = i + i; j < me; j += i)
-                prime[j] = 1, lp[j] = i;
-        }
-    for(int i = 2; i < me; i ++){
-        int j = i;
-        while(j > 1){
-            int d = lp[j];
-            int cnt = 0;
-            while(j % d == 0){
-                cnt ++;
-                j /= d;
-            }
-            current = 1LL * current * inverse(f[d] + 1) % mod;
-            f[d] += cnt;
-            current = 1LL * current * (f[d] + 1) % mod;
-        }
-        res[i] = current;
+template <class T>
+void fastInput(T &N) {
+    char ch;
+    N = 0;
+    while ((ch = getchar_unlocked()) && ch == ' ') {};
+    if (isdigit(ch)) N = ch - '0';
+    while ((ch = getchar_unlocked()) && isdigit(ch)) {
+        N = (N << 1) + (N << 3) + ch - '0';
     }
-    for(int i = 1; i < me; i ++)
-        res[i] = (res[i - 1] + res[i]) % mod;
+}
+template<class T> void fastPrint(T n){
+    if(n == 0){
+        puts("0");
+        return;
+    }
+    char buffer[256];
+    int ptr = 0, sign = 1;
     
-    cin >> T;
-    while(T --){
-        cin >> L >> R;
-        cout << (res[R] - res[L - 1] + mod) % mod << endl;
+    if(n < 0){
+        sign = -1;
+        n *= -1;
+    }
+    while(n > 0){
+        buffer[ptr ++] = (char)(n % 10 + '0');
+        n /= 10;
+    }
+    if(sign == -1)
+        putchar_unlocked('-');
+    for(int i = ptr - 1; i >= 0; i --)
+        putchar_unlocked(buffer[i]);
+    putchar_unlocked('\n');
+}
+
+int power(int a, int b) {
+    int result = 1, current = a;
+    while (b) {
+        if (b & 1) result = 1LL * result * current % MODULO;
+        current = 1LL * current * current % MODULO;
+        b >>= 1;
+    }
+    return result;
+}
+
+
+int inverse[MAX];
+int p[MAX], f[MAX], counts[MAX];
+
+void showTime() {
+    cout.precision(10);
+    cerr << fixed << "elapsed: " << 1. * clock() / CLOCKS_PER_SEC << endl;
+}
+
+int main() {
+    for (int i = 1; i < MAX; i ++) {
+        inverse[i] = power(i, MODULO - 2);
+    }
+    showTime();
+    iota(p, p + MAX, 0);
+    showTime();
+    
+    for (int i = 2; i * i < MAX; i ++) {
+        if (p[i] != i) continue;
+        for (int j = i * i; j < MAX; j += i) p[j] = i;
+    }
+    showTime();
+    fill(counts, counts + MAX, 1);
+    showTime();
+    
+    int current = 1;
+    for (int i = 1; i < MAX; i ++) {
+        int j = i;
+        while (j > 1) {
+            int divisor = p[j];
+            int dcount = 0;
+            while (j % divisor == 0) {
+                j /= divisor;
+                dcount ++;
+            }
+            current = 1LL * current * inverse[counts[divisor]] % MODULO;
+            counts[divisor] += dcount;
+            current = 1LL * current * counts[divisor] % MODULO;
+        }
+        f[i] = current;
+    }
+    showTime();
+    for (int i = 1; i < MAX; i ++) {
+        f[i] = (f[i - 1] + f[i]) % MODULO;
+    }
+    showTime();
+    
+    int T, L, R;
+    
+    fastInput(T);
+    while (T --) {
+        fastInput(L);
+        fastInput(R);
+        fastPrint((f[R] - f[L - 1] + MODULO) % MODULO);
     }
     
     return 0;
 }
+
