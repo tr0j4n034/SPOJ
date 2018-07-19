@@ -126,7 +126,6 @@ int main() {
             roots[i].sum = 0;
         }
     }
-    
     for (int i = 1; i <= N; i ++) {
         int x, y;
         //scanf("%d", &x);
