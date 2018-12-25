@@ -6,6 +6,12 @@
 //  Copyright © 2018 Mahmud. All rights reserved.
 //
 
+/*
+ O(T * (N + M + Q)) solution
+ Think, how we can do updates in a tricky way that
+    only one pass over the array is enough to handle all of the updates...
+ */
+
 #include <iostream>
 #include <cstdio>
 #include <vector>
